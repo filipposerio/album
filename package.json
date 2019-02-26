@@ -1,0 +1,16 @@
+{
+  "name": "glacweb",
+  "version": "0.0.1",
+  "description": "glacweb app",
+  "main": "app.js",
+  "dependencies": {
+    "express": "^3.21.2",
+    "socket.io": "^2.1.0",
+  },
+  "scripts": {
+    "start": "node server.js"
+  },
+  "devDependencies": {},
+  "author": "",
+  "license": "ISC"
+}
