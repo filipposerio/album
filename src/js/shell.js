@@ -38,7 +38,6 @@ const navbar_html = `
 <li class="menuitem" id="home"><a href="#">Home</a></li>
 <li class="menuitem"  id="anagrafica"><a href="#anagrafica" id="anagrafica" >Amici</a></li>
 <li class="menuitem"  id="albumamici"><a href="#albumamici" id="albumamici" >Album dei tuoi amici</a></li>
-
 <li class="menuitem" id="albumtuo" ><a href="#albumtuo" id="albumtuo" >Il tuo Album</a></li>
 <li class="menuitem" id="logout" style="float:right"><a id="logout" class="active" href="#lgout">Logout</a></li>
 </ul> 
