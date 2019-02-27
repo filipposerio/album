@@ -222,7 +222,7 @@ const listAnagrafica = ( rows ) => {
 
           <div id="grid" disabled=${pAbilita}>
           ${rows.map(row => `
-            <div id="${row.numero}" class="cardfigurine" style="background-color:${row.trovata}" >${row.numero}   </div>
+            <div id="${row.numero}" class="cardfigurine" style="background-color:${row.trovata}">${row.numero}   </div>
             `
             ).join('')}
             </div>
