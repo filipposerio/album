@@ -17,6 +17,8 @@ let userID;
 let usrConnesso ={}
 let objPaziente = {};
 let objFigurina ={};
+let coloretrovata = "green"
+let coloremanca = "orange"
 // Module variables
 const figcompleto = []
 const figtrovate = []
@@ -266,14 +268,14 @@ const listAnagrafica = ( rows ) => {
               console.log(objFigurina)  
               objFigurina.idanagrafica = objPaziente.idanagrafica
               if (objFigurina.idanagrafica == usrConnesso.idanagrafica){
-                if (event.target.style.backgroundColor == "green"){
-                  event.target.style.backgroundColor = "red"
+                if (event.target.style.backgroundColor == coloretrovata){
+                  event.target.style.backgroundColor = "orange"
                   //document.getElementById(objFigurina.numero).style.backgroundColor  = "orange"
                   mdlAlbum.eliminaFigurina(objFigurina)
 
                 }
                 else {
-                  event.target.style.backgroundColor = "green"
+                  event.target.style.backgroundColor = coloretrovata
                   mdlAlbum.aggiungiFigurina(objFigurina)
 
                 }
@@ -293,7 +295,7 @@ const listAnagrafica = ( rows ) => {
     for (let i=0; i< 50; i++)
     {
       j=Math.floor(Math.random() * 600) + 1;
-      figtrovate[i] = {"idfigurina":0,"numero":j, "trovata":"green"}
+      figtrovate[i] = {"idfigurina":0,"numero":j, "trovata":coloretrovata}
       
     }
 
@@ -302,7 +304,7 @@ const listAnagrafica = ( rows ) => {
     
     for (let i=0; i< 553; i++)
     {
-      figcompleto[i] = {"idfigurina":i,"numero":i+1, "trovata":"red"}
+      figcompleto[i] = {"idfigurina":i,"numero":i+1, "trovata":coloremanca}
     }
 
   };
@@ -316,7 +318,7 @@ const listAnagrafica = ( rows ) => {
       for (let k=0; k<figtrovate.length; k++){
         if (figcompleto[i].numero == figtrovate[k].numero) {
           figcompleto[i].idfigurina = figtrovate[k].idfigurina
-          figcompleto[i].trovata = "green"
+          figcompleto[i].trovata = coloretrovata
         }
       }
       
@@ -350,11 +352,11 @@ const grafico = (ftrovate,fmancanti) => {
     labels: ["Trovate  ", "Mancanti"],
     datasets: [{
       label: "Totale figurine album 553 ",
-      backgroundColor: ["green", "red"],
-      borderColor: ["green", "red"],
+      backgroundColor: [coloretrovata, coloremanca],
+      borderColor: [coloretrovata, coloremanca],
       borderWidth: 2,
-      hoverBackgroundColor: ["green", "red"],
-      hoverBorderColor:["green", "red"],
+      hoverBackgroundColor: [coloretrovata, coloremanca],
+      hoverBorderColor:[coloretrovata, coloremanca],
       data: [ftrovate,fmancanti],
     }]
   };
