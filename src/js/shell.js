@@ -3,6 +3,7 @@ import * as album from './album.js';
 import * as login from './login.js';
 import * as message from './message.js';
 import * as carrello from './laterale.js';
+import * as pixelart from './pixelart.js';
 
 // Module variables
 let objUser ={}
@@ -39,6 +40,7 @@ const navbar_html = `
 <li class="menuitem"  id="anagrafica"><a href="#anagrafica" id="anagrafica" >Amici</a></li>
 <li class="menuitem"  id="albumamici"><a href="#albumamici" id="albumamici" >Album dei tuoi amici</a></li>
 <li class="menuitem" id="albumtuo" ><a href="#albumtuo" id="albumtuo" >Il tuo Album</a></li>
+<li class="menuitem" id="pixelart" ><a href="#pixelart" id="pixelart" >Il tuo Disegno</a></li>
 <li class="menuitem" id="logout" style="float:right"><a id="logout" class="active" href="#lgout">Logout</a></li>
 </ul> 
 `;
@@ -67,6 +69,13 @@ const onClickMenuitem = ( id ) => {
         album.initModule( document.querySelector('.container-centrale'),objUser,true);
         break;
       }
+      case "pixelart": {
+        console.log("chiamo la pazienti initmodule")
+        localStorage.contesto = "accettazioni"
+        //document.getElementById('sottotitolo').innerHTML="ALBUM CUCCIOLOTTI 2019"
+        pixelart.initModule( document.querySelector('.container-centrale'),objUser,true);
+        break;
+      }      
       case "message": {
           console.log("scattato bottone clik message")
         message.show( 'Benvenuti in GlacWeb 2.0');
