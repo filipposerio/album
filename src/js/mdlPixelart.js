@@ -66,6 +66,7 @@ const searchDisegnoUtente = ( queryString ) => {
 const aggiungiPixel = ( queryString ) => {
 
   console.log('invio al server la richiesta :aggiungiFigurina ' + queryString)
+  console.log( queryString)
 
    sio.emit( 'aggiungiPixel', queryString )
 }

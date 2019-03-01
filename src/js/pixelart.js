@@ -95,6 +95,7 @@ document.addEventListener( 'searchDisegnoUtente', ( event ) => {
     mergeAlbum(figcompleto,event.data);
     console.log(localStorage.idanagrafica)
     console.log(event.data[0])
+    console.log(albumCompleto)
     if (event.data[0].idanagrafica == localStorage.idanagrafica){
       listFigurine(figcompleto,true)
       
@@ -220,11 +221,14 @@ const listAnagrafica = ( rows ) => {
      </style>
       <p>
       <div class="container-fluid">
+          <div id="buttons">
+            <input type="color" id="color" value="Color">
+          </div> 
           <button id="puliscidisegno">Pulisci il disegno</button>
 
           <div id="grid" disabled=${pAbilita}>
           ${rows.map(row => `
-            <div id="${row.numero}" class="cardfigurine" style="background-color:${row.trovata}">${row.numero}   </div>
+            <div id="${row.numero}" class="cardfigurine" style="background-color:${row.colore}">${row.numero}   </div>
             `
             ).join('')}
             </div>
@@ -233,6 +237,7 @@ const listAnagrafica = ( rows ) => {
       document.getElementById('infoalbum').innerHTML="DI " + objPaziente.nome
       
       document.querySelector('.read-sub').innerHTML = html;
+      let colorInput = document.getElementById("color");
       document.getElementById('puliscidisegno').addEventListener('click',( event ) => {
         if (objFigurina.idanagrafica == usrConnesso.idanagrafica){
           mdlPixel.pulisciDisegno(usrConnesso.idanagrafica)
@@ -277,6 +282,7 @@ const listAnagrafica = ( rows ) => {
               }
               console.log("verifica obj Paziente 0 :")
               console.log(objFigurina)  
+              let colorInput = document.getElementById("color");
               objFigurina.idanagrafica = objPaziente.idanagrafica
               if (objFigurina.idanagrafica == usrConnesso.idanagrafica){
                 if (event.target.style.backgroundColor == coloretrovata){
@@ -286,7 +292,9 @@ const listAnagrafica = ( rows ) => {
 
                 }
                 else {
-                  event.target.style.backgroundColor = coloretrovata
+                  
+                  event.target.style.backgroundColor = colorInput.value
+                  objFigurina.colore=colorInput.value
                   mdlPixel.aggiungiPixel(objFigurina)
 
                 }
@@ -315,7 +323,7 @@ const listAnagrafica = ( rows ) => {
     
     for (let i=0; i< 1400; i++)
     {
-      figcompleto[i] = {"idfigurina":i,"numero":i+1, "trovata":coloremanca}
+      figcompleto[i] = {"idfigurina":i,"numero":i+1, "trovata":coloremanca, "colore":"#ffffff"}
     }
 
   };
@@ -330,6 +338,7 @@ const listAnagrafica = ( rows ) => {
         if (figcompleto[i].numero == figtrovate[k].numero) {
           figcompleto[i].idfigurina = figtrovate[k].idfigurina
           figcompleto[i].trovata = coloretrovata
+          figcompleto[i].colore = figtrovate[k].colore
         }
       }
       
