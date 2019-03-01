@@ -66,9 +66,15 @@ const mainHTML = `
 `;
 
 
+
 /*
  Event handlers
 */
+
+document.addEventListener( 'pulisciDisegno', ( event ) => {
+  initModule(container, usrConnesso, objPaziente)
+});
+
 document.addEventListener( 'searchAnagraficaAlbum', ( event ) => {
   if (event.data != undefined) {
     console.log("Album - event searchAnagraficaAlbum:  creo lista da elenco" + event.data)

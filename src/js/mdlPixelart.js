@@ -75,11 +75,18 @@ const eliminaPixel = ( queryString ) => {
 
    sio.emit( 'eliminaPixel', queryString )
 }
+const pulisciDisegno = ( queryString ) => {
+
+  console.log('invio al server la richiesta :pulisciDisegno ' + queryString)
+
+   sio.emit( 'pulisciDisegno', queryString )
+}
 
 export {
   searchAnagraficaDisegno,
   searchDisegnoUtente,
   aggiungiPixel,
-  eliminaPixel
+  eliminaPixel,
+  pulisciDisegno,
 
 }

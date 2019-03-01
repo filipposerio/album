@@ -220,6 +220,7 @@ const listAnagrafica = ( rows ) => {
      </style>
       <p>
       <div class="container-fluid">
+          <button id="puliscidisegno">Pulisci il disegno</button>
 
           <div id="grid" disabled=${pAbilita}>
           ${rows.map(row => `
@@ -232,6 +233,15 @@ const listAnagrafica = ( rows ) => {
       document.getElementById('infoalbum').innerHTML="DI " + objPaziente.nome
       
       document.querySelector('.read-sub').innerHTML = html;
+      document.getElementById('puliscidisegno').addEventListener('click',( event ) => {
+        if (objFigurina.idanagrafica == usrConnesso.idanagrafica){
+          mdlPixel.pulisciDisegno(usrConnesso.idanagrafica)
+        }
+        else {
+          message.show("non puoi modificare album di altri")
+        } 
+     
+      });
 
       console.log("selezione righe tabella")
       //const table = document.getElementById( "userList" );
