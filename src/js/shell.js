@@ -41,6 +41,7 @@ const navbar_html = `
 <li class="menuitem"  id="albumamici"><a href="#albumamici" id="albumamici" >Album dei tuoi amici</a></li>
 <li class="menuitem" id="albumtuo" ><a href="#albumtuo" id="albumtuo" >Il tuo Album</a></li>
 <li class="menuitem" id="pixelart" ><a href="#pixelart" id="pixelart" >Il tuo Disegno</a></li>
+<li class="menuitem" id="listamancanti" ><a href="#listamancanti" id="listamancanti" >Lista mancanti</a></li>
 <li class="menuitem" id="logout" style="float:right"><a id="logout" class="active" href="#lgout">Logout</a></li>
 </ul> 
 `;
