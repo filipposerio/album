@@ -6,7 +6,8 @@ import * as message from './message.js';
 import * as mdlAlbum    from './mdlAlbum.js';
 import * as pippo from './Chart.js';
 /*pgdb = require('./datiPgDb.js');*/
-//import * as laterale    from './laterale.js';
+import * as laterale    from './laterale.js';
+
 import * as comuni from './comuni.js';
 import * as utility from './utility.js';
 
@@ -22,7 +23,7 @@ let coloremanca = "orange"
 // Module variables
 const figcompleto = []
 const figtrovate = []
-
+let objAlbum ={}
 const mainHTMLowner = `
 <div class="container-fluid">
   <div id="headerpaziente" class="d-print-none">
@@ -39,6 +40,8 @@ const mainHTMLowner = `
 
 const mainHTML = `
 <div class="container-fluid">
+
+
   <div id="cercapaziente" >
     <form id="search">
       <div class="form-group">
@@ -57,8 +60,11 @@ const mainHTML = `
     </div>
   </div>
   <h1 id="infoalbum" align="center"></h1>
-  <div id="dtlPazienti" class="read-sub">  Questa è la sezione read sub</div>
-  
+
+
+    <div id="dtlPazienti" class="read-sub col-80" >  Questa è la sezione read sub</div><span>
+    
+ 
   
 
 </div>
@@ -113,14 +119,15 @@ document.addEventListener( 'searchAlbumUtente', ( event ) => {
       listFigurine(figcompleto,false)
       grafico(event.data.length,553-event.data.length);
     }
-
-    
-
-      //listFigurine( event.data );
+    objAlbum.trovate = event.data.length
+    objAlbum.mancanti = 553-event.data.length
+    //alert('TROVATE: ' + objAlbum.trovate)
+    //alert('MANCANTI: ' + objAlbum.mancanti)
+    laterale.figurineMancanti(objAlbum.mancanti,objAlbum.trovate);
+    //listFigurine( event.data );
   }
   else {
     console.log("Album - event searchAlbumUtente:  event.data undefined!!!!!!")
-
     message.show("Album - event searchAlbumUtente: Nessuna figurina presente.")
     albumCompleto();
     mergeAlbum(figcompleto,event.data);
@@ -278,11 +285,19 @@ const listAnagrafica = ( rows ) => {
                   event.target.style.backgroundColor = "orange"
                   //document.getElementById(objFigurina.numero).style.backgroundColor  = "orange"
                   mdlAlbum.eliminaFigurina(objFigurina)
-
+                  objAlbum.trovate -= 1
+                  objAlbum.mancanti += 1
+                  laterale.figurineMancanti(objAlbum.trovate,objAlbum.mancanti);
+                  grafico(objAlbum.trovate,objAlbum.mancanti);
                 }
                 else {
                   event.target.style.backgroundColor = coloretrovata
                   mdlAlbum.aggiungiFigurina(objFigurina)
+                  objAlbum.trovate += 1
+                  objAlbum.mancanti -= 1
+                  laterale.figurineMancanti(objAlbum.trovate,objAlbum.mancanti);
+                  grafico(objAlbum.trovate,objAlbum.mancanti);
+
 
                 }
               }
@@ -400,8 +415,7 @@ const initModule = ( container, pUsrConnesso, pOwner) => {
     albumCompleto();
     mdlAlbum.searchAlbumUtente(pUsrConnesso.idanagrafica)
   }
-  
-
+ 
   
   
 };

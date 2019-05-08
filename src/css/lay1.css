@@ -19,15 +19,17 @@ body {
   
   
 }
+
 .col-80 {
   /*-ms-flex: 80%; /* IE10 */
   flex: 80%;
-  
+    
   
 }
 .col-20 {
   /*-ms-flex: 20%; /* IE10 */
   flex: 20%;
+  /*background-color: lightgray;*/
   
 }
 .col-25 {

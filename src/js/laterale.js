@@ -21,6 +21,7 @@ const html = `
 <div id="head"></div>
 </br>
 <div id="paz"></div>
+<div id="fig"></div>
 `;
 
 
@@ -98,6 +99,13 @@ const initModule = ( usrConnesso ) => {
  
 };
 
+// Export module initModule
+const figurineMancanti = (trovate,mancanti  ) => {
+  console.log("initmodule laterale ")
+  document.getElementById('fig').innerHTML = '<p>numero mancanti: ' + mancanti+'</p><p> numero trovate:' + trovate+ '</p>';
+ 
+  
+ };
+ 
 
-
-export { initModule };
+export { initModule, figurineMancanti };
