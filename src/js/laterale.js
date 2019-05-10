@@ -125,4 +125,4 @@ const figurineMancanti = (trovate,mancanti, elenco ) => {
  
   
  };
-export { initModule, figurineMancanti, listafigurineMancanti };
+export { initModule, figurineMancanti };
