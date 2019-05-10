@@ -41,7 +41,7 @@ const navbar_html = `
 <li class="menuitem"  id="albumamici"><a href="#albumamici" id="albumamici" >Album dei tuoi amici</a></li>
 <li class="menuitem" id="albumtuo" ><a href="#albumtuo" id="albumtuo" >Il tuo Album</a></li>
 <li class="menuitem" id="pixelart" ><a href="#pixelart" id="pixelart" >Il tuo Disegno</a></li>
-<li class="menuitem" id="listamancanti" ><a href="#listamancanti" id="listamancanti" >Lista mancanti</a></li>
+<!--li class="menuitem" id="listamancanti" ><a href="#listamancanti" id="listamancanti" >Lista mancanti</a></li-->
 <li class="menuitem" id="logout" style="float:right"><a id="logout" class="active" href="#lgout">Logout</a></li>
 </ul> 
 `;
@@ -78,10 +78,11 @@ const onClickMenuitem = ( id ) => {
         break;
       }      
       case "message": {
-          console.log("scattato bottone clik message")
-        message.show( 'Benvenuti in GlacWeb 2.0');
-        break;
-      }
+        console.log("scattato bottone clik message")
+      message.show( 'Benvenuti in GlacWeb 2.0');
+      break;
+    }
+  
       case "logout": {
         console.log("passo dalla logout");
         localStorage.clear();

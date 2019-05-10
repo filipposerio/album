@@ -41,7 +41,7 @@ if (port == null || port == "") {
   port = 3004;
 }
 server.listen( port);
-console.log( 'Exp Listen on port %d in %s mode', server.address().port, app.settings.env );
+console.log( 'Exp Listen on port %d in %s mode', port, app.settings.env );
 
 /*const strIng ="1974-07-28"
 const strIta ="28-07-1974"

@@ -22,6 +22,7 @@ const html = `
 </br>
 <div id="paz"></div>
 <div id="fig"></div>
+<div id="manca"></div>
 `;
 
 
@@ -100,12 +101,28 @@ const initModule = ( usrConnesso ) => {
 };
 
 // Export module initModule
-const figurineMancanti = (trovate,mancanti  ) => {
+const figurineMancanti = (trovate,mancanti, elenco ) => {
   console.log("initmodule laterale ")
   document.getElementById('fig').innerHTML = '<p>numero mancanti: ' + mancanti+'</p><p> numero trovate:' + trovate+ '</p>';
- 
+  console.log("laterale: ")
+  console.log(elenco[1])
+  const html = `
+  <p><b> Elenco figurina mancanti</b></p>
+    <p>
+       ${elenco.map(row => `
+          ${row.numero}
+          `
+          ).join('')}
+     </p>
+     `
+  document.getElementById('manca').innerHTML = html;
   
  };
  
-
-export { initModule, figurineMancanti };
+ const listafigurineMancanti = (elenco) => {
+  console.log("initmodule laterale ")
+  document.getElementById('manca').innerHTML = '<p>' + elenco+'</p>';
+ 
+  
+ };
+export { initModule, figurineMancanti, listafigurineMancanti };

@@ -14,6 +14,8 @@ import * as utility from './utility.js';
 /*
 Body module
 */
+let objMancanti = {};
+let strMancanti = "";
 let userID;
 let usrConnesso ={}
 let objPaziente = {};
@@ -23,6 +25,7 @@ let coloremanca = "orange"
 // Module variables
 const figcompleto = []
 const figtrovate = []
+const figmancanti = []
 let objAlbum ={}
 const mainHTMLowner = `
 <div class="container-fluid">
@@ -99,12 +102,14 @@ document.addEventListener( 'searchAlbumUtente', ( event ) => {
   console.log("Album - event searchAlbumUtente: passo dalla eventlistener searchCognome....pazienti " + event.data)
   if (event.data.length) {
     console.log("Album - event searchAlbumUtente:  creo lista da elenco" + event.data)
-    console.log(event.data)
+    //console.log(event.data)
     console.log(event.data.length)
     albumCompleto();
+   
     
     //figurineTrovate(event.data);
     mergeAlbum(figcompleto,event.data);
+    albumMancanti();
     console.log(localStorage.idanagrafica)
     console.log(event.data[0])
     if (event.data[0].idanagrafica == localStorage.idanagrafica){
@@ -123,7 +128,7 @@ document.addEventListener( 'searchAlbumUtente', ( event ) => {
     objAlbum.mancanti = 553-event.data.length
     //alert('TROVATE: ' + objAlbum.trovate)
     //alert('MANCANTI: ' + objAlbum.mancanti)
-    laterale.figurineMancanti(objAlbum.mancanti,objAlbum.trovate);
+    laterale.figurineMancanti(objAlbum.trovate,objAlbum.mancanti,figmancanti);
     //listFigurine( event.data );
   }
   else {
@@ -132,17 +137,68 @@ document.addEventListener( 'searchAlbumUtente', ( event ) => {
     albumCompleto();
     mergeAlbum(figcompleto,event.data);
     listFigurine(figcompleto,false)
+    grafico(0,553-0);
   }
+  listFigurineMancanti()
 });
-
+const EliminaFigurinaDalistFigurineMancanti = (objFigurina) =>{
+  console.log("devo eliminare la figurina: " + objFigurina.numero)
+  console.log("elenco mancanti: " + figmancanti.length)
+  console.log( figmancanti[1])
+ 
+  for (let i=0; i< figmancanti.length-1; i++)  {
+    console.log(i +" "+figmancanti[i].numero)
+    if (figmancanti[i].numero == objFigurina.numero){
+      console.log("elimino figurina alla posizione " + i)
+      figmancanti.splice(i,1)
+    }
+  }
+  console.log("ristampo elenco mancanti: " )
+  for (let i=0; i< figmancanti.length-1; i++)  {
+    console.log(figmancanti[i].numero)
+  }
+}
+  const AggiungiFigurinaAlistFigurineMancanti = (objFigurina) =>{
+    console.log("devo aggiungere la figurina: " + objFigurina.numero)
+    console.log("elenco mancanti: " + figmancanti.length)
+    console.log( figmancanti[1])
+    for (let i=0; i< figmancanti.length-1; i++)  {
+      console.log(i +" "+figmancanti[i].numero + "  " + objFigurina.numero)
+      if (Number(figmancanti[i].numero) > Number(objFigurina.numero)){
+        console.log("AGGIUNGO figurina n. " +  objFigurina.numero +" alla posizione " + i + "(prima della figurina numero " + figmancanti[i].numero+")")
+        //figmancanti.push(objFigurina)
+        figmancanti.splice(i,0,objFigurina)
+        break;
+      }
+      console.log(i +" "+figmancanti[i].numero + "  " + objFigurina.numero)
+      console.log("numero mancanti: " + figmancanti.length)
+    }
+    console.log("ristampo elenco mancanti: " )
+      for (let i=0; i< figmancanti.length-1; i++)  {
+        console.log(figmancanti[i].numero)
+    }
+    
+ 
+}
+const listFigurineMancanti = () =>{
+  for (let i=0; i< 553; i++)
+  {
+    //console.log("listamancanti: "+figcompleto[i].numero +" " +figcompleto[i].trovata + " " + coloremanca + " " + coloretrovata )
+    if (figcompleto[i].trovata == coloremanca) {
+      strMancanti = strMancanti + "</br>" + figcompleto[i].numero
+    }
+  }
+  
+  laterale.figurineMancanti(objAlbum.trovate,objAlbum.mancanti,figmancanti);
+  
+  //laterale.listafigurineMancanti(strMancanti)
+}
 const listAnagrafica = ( rows ) => {
   
   console.log("Pazienti - function list: costruisco lista pazienti ")
   console.log( rows )
   console.log( rows[0])
   //console.log( rows[0].cognome)
-
-
   const html = `
   <style>
     #grid { 
@@ -209,7 +265,7 @@ const listAnagrafica = ( rows ) => {
 
   const listFigurine= ( rows, pAbilita ) => {
   
-    console.log("Figurine - function list: costruisco lista pazienti ")
+    console.log("Figurine - function list: costruisco lista figurine ")
     console.log( rows )
     console.log( rows[0])
     //console.log( rows[0].cognome)
@@ -269,7 +325,7 @@ const listAnagrafica = ( rows ) => {
               for (let h=0; h<rows.length; h++){
                 //console.log(row.id+"("+row.id.length+") "+rows[h].idanagrafica+"("+rows[h].idanagrafica.toString().length+")");
                 //console.log(h)
-                //console.log(rows[h])
+                console.log('Costruisco album. cerco la figurina:' + rows[h])
                 if (rows[h].numero == row.id) {
                   
                   objFigurina = rows[h]
@@ -287,7 +343,10 @@ const listAnagrafica = ( rows ) => {
                   mdlAlbum.eliminaFigurina(objFigurina)
                   objAlbum.trovate -= 1
                   objAlbum.mancanti += 1
-                  laterale.figurineMancanti(objAlbum.trovate,objAlbum.mancanti);
+                  AggiungiFigurinaAlistFigurineMancanti(objFigurina)
+                  
+                  laterale.figurineMancanti(objAlbum.trovate,objAlbum.mancanti,figmancanti);
+                  //listFigurineMancanti()
                   grafico(objAlbum.trovate,objAlbum.mancanti);
                 }
                 else {
@@ -295,7 +354,10 @@ const listAnagrafica = ( rows ) => {
                   mdlAlbum.aggiungiFigurina(objFigurina)
                   objAlbum.trovate += 1
                   objAlbum.mancanti -= 1
-                  laterale.figurineMancanti(objAlbum.trovate,objAlbum.mancanti);
+                  EliminaFigurinaDalistFigurineMancanti(objFigurina)
+                  laterale.figurineMancanti(objAlbum.trovate,objAlbum.mancanti,figmancanti);
+                  
+                  //listFigurineMancanti()
                   grafico(objAlbum.trovate,objAlbum.mancanti);
 
 
@@ -319,6 +381,20 @@ const listAnagrafica = ( rows ) => {
       figtrovate[i] = {"idfigurina":0,"numero":j, "trovata":coloretrovata}
       
     }
+
+  };
+  const albumMancanti = (  ) => {
+    let j=0;
+    for (let i=0; i< 553; i++)
+    {      
+      if (figcompleto[i].trovata == coloremanca) {
+        figmancanti[j] = figcompleto[i]
+        j +=1;
+      }
+    }
+    console.log("figmancanti+++++++++++++++++++++++++++++++++++++++++++++++++++++")
+
+    console.log(figmancanti)
 
   };
   const albumCompleto = (  ) => {
@@ -345,7 +421,8 @@ const listAnagrafica = ( rows ) => {
       
     }
   }
-const search = ( event ) => {
+
+  const search = ( event ) => {
   console.log('search anagrafica' +  event.target.name.value );
   event.preventDefault();
   const info_paziente  = document.getElementById( "info_paziente" );
@@ -405,8 +482,8 @@ const initModule = ( container, pUsrConnesso, pOwner) => {
     container.innerHTML = mainHTML;
     const form = document.forms.search;
     form.addEventListener ('submit', search, false);
-    document.getElementById('grafico').innerHTML=""
-    document.getElementById('infoalbum').innerHTML=""
+    document.getElementById('grafico').innerHTML="";
+    document.getElementById('infoalbum').innerHTML="";
     document.querySelector('.read-sub').innerHTML = "";
   }
   else
@@ -421,4 +498,4 @@ const initModule = ( container, pUsrConnesso, pOwner) => {
 };
 
 
-export { initModule};
+export { initModule, listFigurineMancanti};

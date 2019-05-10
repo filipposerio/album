@@ -219,5 +219,5 @@ ul {
   cursor: pointer;
 }
 .form button:hover,.form button:active,.form button:focus {
-  background: #43A047;
+  background: white
 }
