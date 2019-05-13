@@ -139,7 +139,7 @@ document.addEventListener( 'searchAlbumUtente', ( event ) => {
     listFigurine(figcompleto,false)
     grafico(0,553-0);
   }
-  listFigurineMancanti()
+  
 });
 const EliminaFigurinaDalistFigurineMancanti = (objFigurina) =>{
   console.log("devo eliminare la figurina: " + objFigurina.numero)
@@ -180,19 +180,7 @@ const EliminaFigurinaDalistFigurineMancanti = (objFigurina) =>{
     
  
 }
-const listFigurineMancanti = () =>{
-  for (let i=0; i< 553; i++)
-  {
-    //console.log("listamancanti: "+figcompleto[i].numero +" " +figcompleto[i].trovata + " " + coloremanca + " " + coloretrovata )
-    if (figcompleto[i].trovata == coloremanca) {
-      strMancanti = strMancanti + "</br>" + figcompleto[i].numero
-    }
-  }
-  
-  laterale.figurineMancanti(objAlbum.trovate,objAlbum.mancanti,figmancanti);
-  
-  //laterale.listafigurineMancanti(strMancanti)
-}
+
 const listAnagrafica = ( rows ) => {
   
   console.log("Pazienti - function list: costruisco lista pazienti ")
@@ -346,7 +334,7 @@ const listAnagrafica = ( rows ) => {
                   AggiungiFigurinaAlistFigurineMancanti(objFigurina)
                   
                   laterale.figurineMancanti(objAlbum.trovate,objAlbum.mancanti,figmancanti);
-                  //listFigurineMancanti()
+                  
                   grafico(objAlbum.trovate,objAlbum.mancanti);
                 }
                 else {
@@ -357,7 +345,7 @@ const listAnagrafica = ( rows ) => {
                   EliminaFigurinaDalistFigurineMancanti(objFigurina)
                   laterale.figurineMancanti(objAlbum.trovate,objAlbum.mancanti,figmancanti);
                   
-                  //listFigurineMancanti()
+                 
                   grafico(objAlbum.trovate,objAlbum.mancanti);
 
 
@@ -498,4 +486,4 @@ const initModule = ( container, pUsrConnesso, pOwner) => {
 };
 
 
-export { initModule, listFigurineMancanti};
+export { initModule};
