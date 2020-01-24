@@ -1,4 +1,4 @@
-
+import * as elencoalbum from './elencoalbum.js';
 import * as album from './album.js';
 import * as login from './login.js';
 import * as message from './message.js';
@@ -16,7 +16,7 @@ const main_html = `
   
 <div class="row">
   <div class="col-80">
-  <div align="center" class="display-5 d-print-none" id="sottotitolo"><h1>ALBUM AMICI CUCCIOLOTTI 2019</h1></div>
+  <div align="center" class="display-5 d-print-none" id="sottotitolo"></div>
     <div id="centrale" class="container  container-centrale ">
     </div>
   </div>
@@ -66,8 +66,9 @@ const onClickMenuitem = ( id ) => {
       case "albumtuo": {
         console.log("chiamo la pazienti initmodule")
         localStorage.contesto = "accettazioni"
-        //document.getElementById('sottotitolo').innerHTML="ALBUM CUCCIOLOTTI 2019"
-        album.initModule( document.querySelector('.container-centrale'),objUser,true);
+        document.getElementById('sottotitolo').innerHTML="<h2>ALBUM DI " + objUser.username+"</h2>"
+        //album.initModule( document.querySelector('.container-centrale'),objUser,true);
+        elencoalbum.initModule( document.querySelector('.container-centrale'),objUser);
         break;
       }
       case "pixelart": {
@@ -109,7 +110,9 @@ const initModule = ( container, pUsrConnesso ) => {
       );
   }
   carrello.initModule(objUser.username);
-  album.initModule( document.querySelector('.container-centrale'),objUser,true);
+  //album.initModule( document.querySelector('.container-centrale'),objUser,true);
+  document.getElementById('sottotitolo').innerHTML="<h2>ALBUM DI " + objUser.username+"</h2>"
+  elencoalbum.initModule( document.querySelector('.container-centrale'),objUser);
 
 }  
 

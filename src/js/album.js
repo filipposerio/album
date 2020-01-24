@@ -20,6 +20,7 @@ let userID;
 let usrConnesso ={}
 let objPaziente = {};
 let objFigurina ={};
+
 let coloretrovata = "green"
 let coloremanca = "orange"
 // Module variables
@@ -34,7 +35,7 @@ const mainHTMLowner = `
       <div class="col" id="info_paziente"></div>
     </div>
   </div>
-  <h2 id="infoalbum" align="center"></h2>
+  <h3 id="infoalbum" align="center"></h3>
   <div id="grafico" class="grafico-sub" align="center"> </div> 
   <div id="dtlPazienti" class="read-sub">  Questa è la sezione read sub</div>
 </div>
@@ -98,10 +99,11 @@ document.addEventListener( 'searchAnagraficaAlbum', ( event ) => {
   }
 });
 
-document.addEventListener( 'searchAlbumUtente', ( event ) => {
-  console.log("Album - event searchAlbumUtente: passo dalla eventlistener searchCognome....pazienti " + event.data)
+document.addEventListener( 'searchFigurineAlbum', ( event ) => {
+  document.querySelector('.container-centrale').innerHTML = mainHTMLowner;
+  console.log("Album - event searchFigurineAlbum: passo dalla eventlistener searchCognome....pazienti " + event.data)
   if (event.data.length) {
-    console.log("Album - event searchAlbumUtente:  creo lista da elenco" + event.data)
+    console.log("Album - event searchFigurineAlbum:  creo lista da elenco" + event.data)
     //console.log(event.data)
     console.log(event.data.length)
     albumCompleto();
@@ -115,17 +117,17 @@ document.addEventListener( 'searchAlbumUtente', ( event ) => {
     if (event.data[0].idanagrafica == localStorage.idanagrafica){
       listFigurine(figcompleto,true)
       
-      grafico(event.data.length,553-event.data.length);
+      grafico(event.data.length,objAlbum.numerofigurine-event.data.length);
     }
     else
     {
       albumCompleto();
       mergeAlbum(figcompleto,event.data);
       listFigurine(figcompleto,false)
-      grafico(event.data.length,553-event.data.length);
+      grafico(event.data.length,objAlbum.numerofigurine-event.data.length);
     }
     objAlbum.trovate = event.data.length
-    objAlbum.mancanti = 553-event.data.length
+    objAlbum.mancanti = objAlbum.numerofigurine-event.data.length
     //alert('TROVATE: ' + objAlbum.trovate)
     //alert('MANCANTI: ' + objAlbum.mancanti)
     laterale.figurineMancanti(objAlbum.trovate,objAlbum.mancanti,figmancanti);
@@ -134,10 +136,15 @@ document.addEventListener( 'searchAlbumUtente', ( event ) => {
   else {
     console.log("Album - event searchAlbumUtente:  event.data undefined!!!!!!")
     message.show("Album - event searchAlbumUtente: Nessuna figurina presente.")
+    mergeAlbum(figcompleto,[]);
+    albumMancanti();
     albumCompleto();
     mergeAlbum(figcompleto,event.data);
     listFigurine(figcompleto,false)
-    grafico(0,553-0);
+    grafico(0,objAlbum.numerofigurine-0);
+    objAlbum.trovate = event.data.length
+    objAlbum.mancanti = objAlbum.numerofigurine-event.data.length
+    laterale.figurineMancanti(objAlbum.trovate,objAlbum.mancanti,figmancanti);
   }
   
 });
@@ -285,7 +292,7 @@ const listAnagrafica = ( rows ) => {
             </div>
         </div>
         `
-      document.getElementById('infoalbum').innerHTML="ALBUM DI " + objPaziente.nome
+      document.getElementById('infoalbum').innerHTML= objAlbum.descrizione
       
       document.querySelector('.read-sub').innerHTML = html;
 
@@ -324,6 +331,7 @@ const listAnagrafica = ( rows ) => {
               console.log("verifica obj Paziente 0 :")
               console.log(objFigurina)  
               objFigurina.idanagrafica = objPaziente.idanagrafica
+              objFigurina.idalbumutente=objAlbum.idalbumutente
               if (objFigurina.idanagrafica == usrConnesso.idanagrafica){
                 if (event.target.style.backgroundColor == coloretrovata){
                   event.target.style.backgroundColor = "orange"
@@ -373,7 +381,9 @@ const listAnagrafica = ( rows ) => {
   };
   const albumMancanti = (  ) => {
     let j=0;
-    for (let i=0; i< 553; i++)
+    figmancanti.length = 0;
+
+    for (let i=0; i< objAlbum.numerofigurine; i++)
     {      
       if (figcompleto[i].trovata == coloremanca) {
         figmancanti[j] = figcompleto[i]
@@ -384,10 +394,11 @@ const listAnagrafica = ( rows ) => {
 
     console.log(figmancanti)
 
+
   };
   const albumCompleto = (  ) => {
-    
-    for (let i=0; i< 553; i++)
+    figcompleto.length=0;
+    for (let i=0; i< objAlbum.numerofigurine; i++)
     {
       figcompleto[i] = {"idfigurina":i,"numero":i+1, "trovata":coloremanca}
     }
@@ -437,7 +448,7 @@ const grafico = (ftrovate,fmancanti) => {
   var data = {
     labels: ["Trovate  ", "Mancanti"],
     datasets: [{
-      label: "Totale figurine album 553 ",
+      label: "Totale figurine album " +objAlbum.numerofigurine,
       backgroundColor: [coloretrovata, coloremanca],
       borderColor: [coloretrovata, coloremanca],
       borderWidth: 2,
@@ -460,12 +471,12 @@ const grafico = (ftrovate,fmancanti) => {
   
 }
 // Export module initModule
-const initModule = ( container, pUsrConnesso, pOwner) => {
-  console.log("initmodule album")
-  
+const initModule = ( container, pUsrConnesso, pOwner, pAlbum) => {
+  console.log("initmodule album")  
   //vOwner = pOwner
   usrConnesso = pUsrConnesso
   objPaziente = usrConnesso
+  objAlbum = pAlbum
   if (pOwner == false) {
     container.innerHTML = mainHTML;
     const form = document.forms.search;
@@ -478,7 +489,7 @@ const initModule = ( container, pUsrConnesso, pOwner) => {
   {
     container.innerHTML = mainHTMLowner;
     albumCompleto();
-    mdlAlbum.searchAlbumUtente(pUsrConnesso.idanagrafica)
+    mdlAlbum.searchFigurineAlbum(pAlbum.idalbumutente)
   }
  
   

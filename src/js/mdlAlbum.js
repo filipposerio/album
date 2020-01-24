@@ -16,6 +16,22 @@ sio.on( 'aggiornaAlbum', ( result ) => {
 
 })
 
+sio.on( 'searchFigurineAlbum', ( result ) => {
+  console.log("mdlAlbum - event searchFigurineAlbum: ritorno : n.elementi: " + result.length)
+  console.log(result)
+  const event = new CustomEvent('searchFigurineAlbum', {bubbles: true, cancelable: true})
+   if (result.length > 0) {
+     event.data = result
+   }
+   else {
+    console.log("mdlAlbum - event searchFigurineAlbum: ramo senza recordset....")
+     event.data = [];
+   }
+
+  document.dispatchEvent( event )
+
+
+})
 sio.on( 'searchAlbumUtente', ( result ) => {
   console.log("mdlAlbum - event searchAlbumUtente: ritorno : n.elementi: " + result.length)
   console.log(result)
@@ -57,6 +73,12 @@ const searchAnagraficaAlbum = ( queryString ) => {
    sio.emit( 'searchAnagraficaAlbum', queryString )
 }
 
+const searchFigurineAlbum = ( queryString ) => {
+
+  console.log('invio al server la richiesta :searchFigurineAlbum ' + queryString)
+
+   sio.emit( 'searchFigurineAlbum', queryString )
+}
 const searchAlbumUtente = ( queryString ) => {
 
   console.log('invio al server la richiesta :searchAlbumUtente ' + queryString)
@@ -80,6 +102,7 @@ export {
   searchAnagraficaAlbum,
   searchAlbumUtente,
   aggiungiFigurina,
-  eliminaFigurina
+  eliminaFigurina,
+  searchFigurineAlbum
 
 }
