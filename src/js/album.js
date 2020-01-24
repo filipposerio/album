@@ -134,8 +134,8 @@ document.addEventListener( 'searchFigurineAlbum', ( event ) => {
     //listFigurine( event.data );
   }
   else {
-    console.log("Album - event searchAlbumUtente:  event.data undefined!!!!!!")
-    message.show("Album - event searchAlbumUtente: Nessuna figurina presente.")
+    console.log("Album - event searchFigurineAlbum:  event.data undefined!!!!!!")
+    message.show("Album - event searchFigurineAlbum: Nessuna figurina presente.")
     mergeAlbum(figcompleto,[]);
     albumMancanti();
     albumCompleto();
